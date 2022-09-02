@@ -104,11 +104,11 @@ public abstract class BasePartnershipFactory extends BaseComponent implements Pa
         }
     }
 
-    public Partnership getPartnership(Map<String, Object> senderIDs, Map<String, Object> receiverIDs) {
+    public Partnership getPartnership(Map<String, String> senderIDs, Map<String, String> receiverIDs) {
         Iterator<Partnership> psIt = getPartnerships().iterator();
         Partnership currentPs;
-        Map<String, Object> currentSids;
-        Map<String, Object> currentRids;
+        Map<String, String> currentSids;
+        Map<String, String> currentRids;
 
         while (psIt.hasNext()) {
             currentPs = psIt.next();
@@ -145,17 +145,17 @@ public abstract class BasePartnershipFactory extends BaseComponent implements Pa
     }
 
     // returns true if all values in searchIds match values in partnerIds
-    protected boolean compareMap(Map<String, Object> searchIds, Map<String, Object> partnerIds) {
-        Iterator<Map.Entry<String, Object>> searchIt = searchIds.entrySet().iterator();
+    protected boolean compareMap(Map<String, String> searchIds, Map<String, String> partnerIds) {
+        Iterator<Map.Entry<String, String>> searchIt = searchIds.entrySet().iterator();
 
         if (!searchIt.hasNext()) {
             return false;
         }
 
-        Map.Entry<String, Object> searchEntry;
+        Map.Entry<String, String> searchEntry;
         String searchKey;
-        Object searchValue;
-        Object partnerValue;
+        String searchValue;
+        String partnerValue;
 
         while (searchIt.hasNext()) {
             searchEntry = searchIt.next();

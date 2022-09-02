@@ -20,7 +20,7 @@ public interface PartnershipFactory extends Component {
 
     // throws an exception if the partnership doesn't exist
     Partnership getPartnership(Partnership p, boolean reverseLookup) throws OpenAS2Exception;
-    Partnership getPartnership(Map<String, Object> senderIDs, Map<String, Object> receiverIDs);
+    Partnership getPartnership(Map<String, String> senderIDs, Map<String, String> receiverIDs);
 
     // looks up and fills in any header info for a specific msg's partnership
     void updatePartnership(Message msg, boolean overwrite) throws OpenAS2Exception;
@@ -32,5 +32,5 @@ public interface PartnershipFactory extends Component {
 
     List<Partnership> getPartnerships();
 
-    Map<String, Object> getPartners();
+    Map<String, Map<String, String>> getPartners();
 }

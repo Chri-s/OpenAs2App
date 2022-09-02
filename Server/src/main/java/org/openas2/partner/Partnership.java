@@ -74,8 +74,8 @@ public class Partnership implements Serializable {
 
     private static final long serialVersionUID = -8365608387462470629L;
     private Map<String, String> attributes;
-    private Map<String, Object> receiverIDs;
-    private Map<String, Object> senderIDs;
+    private Map<String, String> receiverIDs;
+    private Map<String, String> senderIDs;
     private String name;
 
     public String getName() {
@@ -123,18 +123,18 @@ public class Partnership implements Serializable {
     }
 
     public String getReceiverID(String id) {
-        return (String) getReceiverIDs().get(id);
+        return getReceiverIDs().get(id);
     }
 
-    public Map<String, Object> getReceiverIDs() {
+    public Map<String, String> getReceiverIDs() {
         if (receiverIDs == null) {
-            receiverIDs = new HashMap<String, Object>();
+            receiverIDs = new HashMap<String, String>();
         }
 
         return receiverIDs;
     }
 
-    public void setReceiverIDs(Map<String, Object> receiverIDs) {
+    public void setReceiverIDs(Map<String, String> receiverIDs) {
         this.receiverIDs = receiverIDs;
     }
 
@@ -143,24 +143,24 @@ public class Partnership implements Serializable {
     }
 
     public String getSenderID(String id) {
-        return (String) getSenderIDs().get(id);
+        return getSenderIDs().get(id);
     }
 
-    public Map<String, Object> getSenderIDs() {
+    public Map<String, String> getSenderIDs() {
         if (senderIDs == null) {
-            senderIDs = new HashMap<String, Object>();
+            senderIDs = new HashMap<String, String>();
         }
 
         return senderIDs;
     }
 
-    public void setSenderIDs(Map<String, Object> senderIDs) {
+    public void setSenderIDs(Map<String, String> senderIDs) {
         this.senderIDs = senderIDs;
     }
 
     public boolean matches(Partnership partnership) {
-        Map<String, Object> senderIDs = partnership.getSenderIDs();
-        Map<String, Object> receiverIDs = partnership.getReceiverIDs();
+        Map<String, String> senderIDs = partnership.getSenderIDs();
+        Map<String, String> receiverIDs = partnership.getReceiverIDs();
 
         if (compareIDs(senderIDs, getSenderIDs())) {
             return true;
@@ -215,17 +215,17 @@ public class Partnership implements Serializable {
         return buf.toString();
     }
 
-    protected boolean compareIDs(Map<String, Object> ids, Map<String, Object> compareTo) {
-        Set<Entry<String, Object>> idSet = ids.entrySet();
-        Iterator<Entry<String, Object>> it = idSet.iterator();
+    protected boolean compareIDs(Map<String, String> ids, Map<String, String> compareTo) {
+        Set<Entry<String, String>> idSet = ids.entrySet();
+        Iterator<Entry<String, String>> it = idSet.iterator();
 
         if (!it.hasNext()) {
             return false;
         }
 
-        Map.Entry<String, Object> currentId;
-        Object currentValue;
-        Object compareValue;
+        Map.Entry<String, String> currentId;
+        String currentValue;
+        String compareValue;
 
         while (it.hasNext()) {
             currentId = it.next();

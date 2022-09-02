@@ -29,7 +29,7 @@ public class ListPartnersCommand extends AliasedPartnershipsCommand {
 
         synchronized (partFx) {
 
-            Map<String, Object> partners = partFx.getPartners();
+            Map<String, Map<String, String>> partners = partFx.getPartners();
             Iterator<String> partIt = partners.keySet().iterator();
 
             CommandResult cmdRes = new CommandResult(CommandResult.TYPE_OK);

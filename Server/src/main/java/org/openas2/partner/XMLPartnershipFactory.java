@@ -60,7 +60,7 @@ public class XMLPartnershipFactory extends BasePartnershipFactory implements Has
     private Document partnershipsXml = null;
 
 
-    private Map<String, Object> partners;
+    private Map<String, Map<String, String>> partners;
 
     private Log logger = LogFactory.getLog(XMLPartnershipFactory.class.getSimpleName());
 
@@ -73,15 +73,15 @@ public class XMLPartnershipFactory extends BasePartnershipFactory implements Has
         return getParameter(PARAM_FILENAME, true);
     }
 
-    public Map<String, Object> getPartners() {
+    public Map<String, Map<String, String>> getPartners() {
         if (partners == null) {
-            partners = new HashMap<String, Object>();
+            partners = new HashMap<String, Map<String, String>>();
         }
 
         return partners;
     }
 
-    private void setPartners(Map<String, Object> map) {
+    private void setPartners(Map<String, Map<String, String>> map) {
         partners = map;
     }
 
@@ -117,7 +117,7 @@ public class XMLPartnershipFactory extends BasePartnershipFactory implements Has
             Node rootNode;
             String nodeName;
 
-            Map<String, Object> newPartners = new HashMap<String, Object>();
+            Map<String, Map<String, String>> newPartners = new HashMap<String, Map<String, String>>();
             List<Partnership> newPartnerships = new ArrayList<Partnership>();
 
             for (int i = 0; i < rootNodes.getLength(); i++) {
@@ -148,7 +148,7 @@ public class XMLPartnershipFactory extends BasePartnershipFactory implements Has
         partnership.getAttributes().putAll(attributes);
     }
 
-    public void loadPartner(Map<String, Object> partners, Node node) throws OpenAS2Exception {
+    public void loadPartner(Map<String, Map<String, String>> partners, Node node) throws OpenAS2Exception {
         String[] requiredAttributes = {Partnership.PID_NAME};
 
         Map<String, String> newPartner = XMLUtil.mapAttributes(node, requiredAttributes);
@@ -162,7 +162,7 @@ public class XMLPartnershipFactory extends BasePartnershipFactory implements Has
     }
 
 
-    private void loadPartnerIDs(Map<String, Object> partners, String partnershipName, Node partnershipNode, String partnerType, Map<String, Object> idMap) throws OpenAS2Exception {
+    private void loadPartnerIDs(Map<String, Map<String, String>> partners, String partnershipName, Node partnershipNode, String partnerType, Map<String, String> idMap) throws OpenAS2Exception {
         Node partnerNode = XMLUtil.findChildNode(partnershipNode, partnerType);
 
         if (partnerNode == null) {
@@ -175,9 +175,7 @@ public class XMLPartnershipFactory extends BasePartnershipFactory implements Has
         String partnerName = partnerAttr.get(Partnership.PID_NAME);
 
         if (partnerName != null) {
-            @SuppressWarnings("unchecked")
-            Map<String, Object> map = (Map<String, Object>) partners.get(partnerName);
-            Map<String, Object> partner = map;
+            Map<String, String> partner = partners.get(partnerName);
 
             if (partner == null) {
                 throw new OpenAS2Exception("Partnership " + partnershipName + " has an undefined " + partnerType + ": " + partnerName);
@@ -190,7 +188,7 @@ public class XMLPartnershipFactory extends BasePartnershipFactory implements Has
         idMap.putAll(partnerAttr);
     }
 
-    public void loadPartnership(Map<String, Object> partners, List<Partnership> partnerships, Node node) throws OpenAS2Exception {
+    public void loadPartnership(Map<String, Map<String, String>> partners, List<Partnership> partnerships, Node node) throws OpenAS2Exception {
         Partnership partnership = new Partnership();
         String[] requiredAttributes = {"name"};
 
